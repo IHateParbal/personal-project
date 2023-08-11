@@ -41,11 +41,16 @@ namespace personal_project
         }
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+            UserName = Username.Text; 
+            Password = password.Password;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
                 {
                     connection.Open();
 
-                    string sqlInsertQuery = "INSERT INTO UserDetail (Username,Password) VALUES (@Username, @Password)";
+                    string sqlInsertQuery = "INSERT INTO Users (UserName, Password) VALUES (@Username, @Password)";
 
                     using (SqlCommand insertCommand = new SqlCommand(sqlInsertQuery, connection))
                     {
@@ -53,7 +58,15 @@ namespace personal_project
                         insertCommand.Parameters.AddWithValue("@Password", Password);
                         insertCommand.ExecuteNonQuery();
                     }
+
+                    MessageBox.Show("Registration successful!");
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message);
+                }
+            }
         }
+
     }
 }
