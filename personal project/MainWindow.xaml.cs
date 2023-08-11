@@ -23,18 +23,15 @@ namespace personal_project
     {
         public string UserName { get; set; }
         public string Password { get; set; }
-        private string EnteredPassword;
         string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\madgw\source\repos\Console\personal project\personal project\POS.mdf;Integrated Security=True;Connect Timeout=30";
         public MainWindow()
         {
             InitializeComponent();
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
         }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
 
@@ -43,23 +40,19 @@ namespace personal_project
         {
             UserName = Username.Text; 
             Password = password.Password;
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
                 {
                     connection.Open();
-
                     string sqlInsertQuery = "INSERT INTO Users (UserName, Password) VALUES (@Username, @Password)";
-
                     using (SqlCommand insertCommand = new SqlCommand(sqlInsertQuery, connection))
                     {
                         insertCommand.Parameters.AddWithValue("@Username", UserName);
                         insertCommand.Parameters.AddWithValue("@Password", Password);
                         insertCommand.ExecuteNonQuery();
                     }
-
-                    MessageBox.Show("Registration successful!");
+                    //use this to get to another window that might be anything most likely Hme page
                 }
                 catch (Exception ex)
                 {
