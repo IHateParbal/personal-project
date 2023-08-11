@@ -13,6 +13,7 @@
                 <Setter Property="BorderBrush" Value="Gray"/>          
             <Setter Property="Opacity" Value="0.7"/>
             <Setter Property="Padding" Value="0,0,0,5"/>
+     
         </Style>
         <Style x:Key="BottomBorderPasswordBoxStyle" TargetType="PasswordBox">
             <Setter Property="Background" Value="Transparent"/>
