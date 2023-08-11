@@ -82,8 +82,8 @@
             </Grid>
 <!-- Detail Grid-->
             <Grid Height="225" Width="200" Background="WhiteSmoke" x:Name="DetailGrid" HorizontalAlignment="Center" Margin=" 0 0 180 0">
-                <TextBox Text="{Binding username, Mode=TwoWay}" Style="{StaticResource BottomBorderTextBoxStyle}" Height="20" Width="100" VerticalAlignment="Top" Margin="0 50 0 0"/>
-                <PasswordBox x:Name="passwordBox" Style="{StaticResource BottomBorderPasswordBoxStyle}" PasswordChar="~" Height="20" Width="100" VerticalAlignment="Top" Margin="0 100 0 0" PasswordChanged="PasswordBox_PasswordChanged" />
+                <TextBox x:Name="Username" Style="{StaticResource BottomBorderTextBoxStyle}" Height="20" Width="100" VerticalAlignment="Top" Margin="0 50 0 0"/>
+                <PasswordBox x:Name="password" Style="{StaticResource BottomBorderPasswordBoxStyle}" PasswordChar="~" Height="20" Width="100" VerticalAlignment="Top" Margin="0 100 0 0"/>
                 <Button Height="20 " Width="75" Content="Log in" Padding="0 0 0 0" Margin=" 0 80 0 0" Background="Coral" Foreground="White" BorderBrush="Coral" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click_2">
                     <Button.Resources>
                         <Style TargetType="Border">
