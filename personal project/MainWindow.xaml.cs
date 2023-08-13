@@ -27,15 +27,22 @@ namespace personal_project
         public MainWindow()
         {
             InitializeComponent();
+            
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            Button SignupClicked = (Button)sender;
+            string Signuptext = SignupClicked.Content.ToString();
+            LoginSignup.Content = Signuptext;
         }
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            Button LoginClicked = (Button)sender;
+            string Signuptext = LoginClicked.Content.ToString();
+            LoginSignup.Content = Signuptext;
         }
+
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             UserName = Username.Text; 
@@ -53,6 +60,7 @@ namespace personal_project
                         insertCommand.ExecuteNonQuery();
                     }
                     //use this to get to another window that might be anything most likely Hme page
+                    MessageBox.Show("Success");
                 }
                 catch (Exception ex)
                 {
@@ -60,6 +68,5 @@ namespace personal_project
                 }
             }
         }
-
     }
 }

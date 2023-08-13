@@ -43,7 +43,7 @@
                     <Run Text="Dont have an account?" Foreground="WhiteSmoke" FontSize="15" />
                     <Run Text="&#x0a;Sign up now&#x0a;to make future checkouts &#x0a;faster and enjoy &#x0a;order history tracking." Foreground="White" FontSize="12"/>
                 </TextBlock>
-                <Button VerticalAlignment="Bottom" HorizontalAlignment="Left" Content="Signup" Background="Transparent" Foreground="WhiteSmoke" Margin="20 0 0 45" Click="Button_Click">
+                <Button VerticalAlignment="Bottom" x:Name="signup" HorizontalAlignment="Left" Content="Signup" Background="Transparent" Foreground="WhiteSmoke" Margin="20 0 0 45" Click="Button_Click">
                     <Button.Triggers>
                         <EventTrigger RoutedEvent="Button.Click">
                             <BeginStoryboard>
@@ -64,7 +64,7 @@
     <Run Text="Have an account?" Foreground="WhiteSmoke" FontSize="15" />
     <Run Text="&#x0a;log in now&#x0a;to manage your account and &#x0a;transactions." Foreground="White" FontSize="12"/>
                 </TextBlock>
-                <Button VerticalAlignment="Bottom" HorizontalAlignment="Left" Content="Login" Background="Transparent" Foreground="WhiteSmoke" Margin="20 0 0 45" Click="Button_Click_1" Grid.Column="1">
+                <Button VerticalAlignment="Bottom" x:Name="Login" HorizontalAlignment="Left" Content="Login" Background="Transparent" Foreground="WhiteSmoke" Margin="20 0 0 45" Click="Button_Click_1" Grid.Column="1">
                     <Button.Triggers>
                         <EventTrigger RoutedEvent="Button.Click">
                             <BeginStoryboard>
@@ -85,7 +85,7 @@
             <Grid Height="225" Width="200" Background="WhiteSmoke" x:Name="DetailGrid" HorizontalAlignment="Center" Margin=" 0 0 180 0">
                 <TextBox x:Name="Username" Style="{StaticResource BottomBorderTextBoxStyle}" Height="20" Width="100" VerticalAlignment="Top" Margin="0 50 0 0"/>
                 <PasswordBox x:Name="password" Style="{StaticResource BottomBorderPasswordBoxStyle}" PasswordChar="~" Height="20" Width="100" VerticalAlignment="Top" Margin="0 100 0 0"/>
-                <Button Height="20 " Width="75" Content="Log in" Padding="0 0 0 0" Margin=" 0 80 0 0" Background="Coral" Foreground="White" BorderBrush="Coral" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click_2">
+                <Button Height="20 " Width="75" Content="Sign up" x:Name="LoginSignup" Padding="0 0 0 0" Margin=" 0 80 0 0" Background="Coral" Foreground="White" BorderBrush="Coral" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click_2">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="1"/>
