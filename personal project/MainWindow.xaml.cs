@@ -31,12 +31,16 @@ namespace personal_project
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            Username.Text = "";
+            password.Password = "";
             Button SignupClicked = (Button)sender;
             string Signuptext = SignupClicked.Content.ToString();
             LoginSignup.Content = Signuptext;
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            Username.Text = "";
+            password.Password = "";
             Button LoginClicked = (Button)sender;
             string Logintext = LoginClicked.Content.ToString();
             LoginSignup.Content = Logintext;
