@@ -22,7 +22,7 @@ namespace personal_project
     public partial class POSSystemDisplay_Register : Window
     {
         string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\madgw\source\repos\Console\personal project\personal project\POS.mdf;Integrated Security=True;Connect Timeout=30";
-
+        private static readonly Color[] ButtonColors = { Colors.Tomato, Colors.CornflowerBlue, Colors.Salmon, Colors.Coral, Colors.LightSeaGreen };
         public POSSystemDisplay_Register()
         {
             InitializeComponent();
@@ -30,49 +30,37 @@ namespace personal_project
             {
                 VerticalScrollBarVisibility = ScrollBarVisibility.Auto
             };
-
-            // Create a UniformGrid
             UniformGrid uniformGrid = new UniformGrid
             {
                 Columns = 4,
                 Margin = new Thickness(10)
             };
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-
                 string query = "SELECT * FROM MenuItems";
                 SqlCommand command = new SqlCommand(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
-
+                int colorIndex = 0;
                 while (reader.Read())
                 {
-                    string buttonText = reader["ButtonText"].ToString();
-                    string buttonColor = reader["ButtonColor"].ToString();
-
+                    string buttonText = reader["ItemName"].ToString();
                     Button button = new Button
                     {
                         Height = 125,
                         Width = 125,
-                        Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(buttonColor)),
+                        Background = new SolidColorBrush(ButtonColors[colorIndex]),
                         Margin = new Thickness(10),
                         FontSize = 20,
                         Content = buttonText
                     };
-
+                    colorIndex = (colorIndex + 1) % ButtonColors.Length;
                     uniformGrid.Children.Add(button);
                 }
             }
-
-            // Set the content of the ScrollViewer to the UniformGrid
             scrollViewer.Content = uniformGrid;
-
-            // Add the ScrollViewer to the main window's content
             MainGrid.Children.Add(scrollViewer);
         }
-    
-
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
 
