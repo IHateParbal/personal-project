@@ -27,7 +27,7 @@ namespace personal_project
         public MainWindow()
         {
             InitializeComponent();
-            
+            LoginSignup.Content = "Sign up";
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -35,38 +35,77 @@ namespace personal_project
             string Signuptext = SignupClicked.Content.ToString();
             LoginSignup.Content = Signuptext;
         }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Button LoginClicked = (Button)sender;
-            string Signuptext = LoginClicked.Content.ToString();
-            LoginSignup.Content = Signuptext;
+            string Logintext = LoginClicked.Content.ToString();
+            LoginSignup.Content = Logintext;
         }
-
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            UserName = Username.Text; 
-            Password = password.Password;
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                try
+                string buttonText = LoginSignup.Content.ToString();
+                if (buttonText == "Sign up")
                 {
-                    connection.Open();
-                    string sqlInsertQuery = "INSERT INTO Users (UserName, Password) VALUES (@Username, @Password)";
-                    using (SqlCommand insertCommand = new SqlCommand(sqlInsertQuery, connection))
+                    // Perform sign-up logic
+                    UserName = Username.Text;
+                    Password = password.Password;
+                    using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-                        insertCommand.Parameters.AddWithValue("@Username", UserName);
-                        insertCommand.Parameters.AddWithValue("@Password", Password);
-                        insertCommand.ExecuteNonQuery();
+                        try
+                        {
+                        connection.Open();
+                            string sqlInsertQuery = "INSERT INTO Users (UserName, Password) VALUES (@Username, @Password)";
+                            using (SqlCommand insertCommand = new SqlCommand(sqlInsertQuery, connection))
+                            {
+                                insertCommand.Parameters.AddWithValue("@Username", UserName);
+                                insertCommand.Parameters.AddWithValue("@Password", Password);
+                                insertCommand.ExecuteNonQuery();
+                            }
+                            MessageBox.Show("Sign up successful!");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
                     }
-                    //use this to get to another window that might be anything most likely Hme page
-                    MessageBox.Show("Success");
                 }
-                catch (Exception ex)
+                else if (buttonText == "Login")
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    // Perform login logic
+                    UserName = Username.Text;
+                    Password = password.Password;
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        try
+                        {
+                            connection.Open();
+                            string sqlSelectQuery = "SELECT COUNT(*) FROM Users WHERE UserName = @Username AND Password = @Password";
+                            using (SqlCommand selectCommand = new SqlCommand(sqlSelectQuery, connection))
+                            {
+                                selectCommand.Parameters.AddWithValue("@Username", UserName);
+                                selectCommand.Parameters.AddWithValue("@Password", Password);
+
+                                int matchingUserCount = (int)selectCommand.ExecuteScalar();
+
+                                if (matchingUserCount > 0)
+                                {
+                                    POSSystemDisplay_Register window = new POSSystemDisplay_Register();
+                                    window.Show();
+                                    this.Close();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Login failed. Please sign up if you don't have an account.");
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error: " + ex.Message);
+                        }
+                    }
                 }
             }
+
         }
     }
-}
