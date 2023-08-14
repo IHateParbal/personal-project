@@ -26,41 +26,110 @@ namespace personal_project
         public POSSystemDisplay_Register()
         {
             InitializeComponent();
+            // Create a ScrollViewer
             ScrollViewer scrollViewer = new ScrollViewer
             {
                 VerticalScrollBarVisibility = ScrollBarVisibility.Auto
             };
+
+            // Create a UniformGrid
             UniformGrid uniformGrid = new UniformGrid
             {
                 Columns = 4,
                 Margin = new Thickness(10)
             };
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT * FROM MenuItems";
+
+                int categoryIDToFilter = 1; // Change this to the desired CategoryID
+
+                string query = $"SELECT ItemName, Price FROM MenuItems WHERE CategoryID = {categoryIDToFilter}";
                 SqlCommand command = new SqlCommand(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
+
                 int colorIndex = 0;
+
                 while (reader.Read())
                 {
-                    string buttonText = reader["ItemName"].ToString();
+                    string itemName = reader["ItemName"].ToString();
+                    decimal price = Convert.ToDecimal(reader["Price"]);
+
                     Button button = new Button
                     {
                         Height = 125,
                         Width = 125,
-                        Background = new SolidColorBrush(ButtonColors[colorIndex]),
+                        Background = new SolidColorBrush(ButtonColors[colorIndex % ButtonColors.Length]),
                         Margin = new Thickness(10),
-                        FontSize = 20,
-                        Content = buttonText
+                        FontSize = 20
                     };
-                    colorIndex = (colorIndex + 1) % ButtonColors.Length;
+
+                    Grid grid = new Grid
+                    {
+                        Height = 120,
+                        Width = 120
+                    };
+
+                    Label label1 = new Label
+                    {
+                        Content = "01",
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        VerticalAlignment = VerticalAlignment.Top,
+                        FontSize = 15,
+                        FontWeight = FontWeights.SemiBold,
+                        FontFamily = new FontFamily("poppins")
+                    };
+
+                    Label label2 = new Label
+                    {
+                        Content = "breakfast",
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        VerticalAlignment = VerticalAlignment.Top,
+                        FontSize = 15,
+                        FontWeight = FontWeights.SemiBold,
+                        FontFamily = new FontFamily("poppins")
+                    };
+
+                    Label label3 = new Label
+                    {
+                        Content = itemName,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        FontFamily = new FontFamily("poppins"),
+                        FontSize = 30
+                    };
+
+                    Label label4 = new Label
+                    {
+                        Content = price.ToString(),
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        VerticalAlignment = VerticalAlignment.Bottom,
+                        FontSize = 13,
+                        FontWeight = FontWeights.SemiBold,
+                        FontFamily = new FontFamily("poppins")
+                    };
+
+                    grid.Children.Add(label1);
+                    grid.Children.Add(label2);
+                    grid.Children.Add(label3);
+                    grid.Children.Add(label4);
+
+                    button.Content = grid;
+
+                    colorIndex++;
+
                     uniformGrid.Children.Add(button);
                 }
             }
+
+            // Set the content of the ScrollViewer to the UniformGrid
             scrollViewer.Content = uniformGrid;
+
+            // Add the ScrollViewer to the main window's content
             MainGrid.Children.Add(scrollViewer);
         }
+    }
 
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
