@@ -28,6 +28,7 @@ namespace personal_project
         {
             InitializeComponent();
             LoginSignup.Content = "Sign up";
+            Header.Content = LoginSignup.Content;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -36,6 +37,7 @@ namespace personal_project
             Button SignupClicked = (Button)sender;
             string Signuptext = SignupClicked.Content.ToString();
             LoginSignup.Content = Signuptext;
+            Header.Content = Signuptext;
         }
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -44,6 +46,7 @@ namespace personal_project
             Button LoginClicked = (Button)sender;
             string Logintext = LoginClicked.Content.ToString();
             LoginSignup.Content = Logintext;
+            Header.Content = Logintext;
         }
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {

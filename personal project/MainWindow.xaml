@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:personal_project"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="MainWindow" Height="720" Width="1280" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Window.Resources>
         <Style x:Key="BottomBorderTextBoxStyle" TargetType="TextBox">
                 <Setter Property="Background" Value="Transparent"/>
@@ -24,74 +24,82 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Grid.Background>
-            <ImageBrush ImageSource="C:\Users\madgw\Downloads\1653825.jpg"/>
-        </Grid.Background>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="1">
-            <Grid Height="175" Width="400" Background="Black" Opacity="0.5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-<!--Dont have an account dialouge-->
-                <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Height="125" Width=" 180" Margin="20 10 0 0" Foreground="White" Opacity="1" Grid.Column="0">
-                    <Run Text="Dont have an account?" Foreground="WhiteSmoke" FontSize="15" />
+        <Grid>
+            <Grid.Background>
+                <ImageBrush ImageSource="C:\Users\madgw\Downloads\2861750.jpg"/>
+            </Grid.Background>
+            <Grid.Effect>
+                <BlurEffect Radius="10" KernelType="Gaussian"/>
+            </Grid.Effect>
+        </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid Height="200" Width="600" Background="Black" Opacity="0.5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--Dont have an account dialouge-->
+                    <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Height="125" Width="250" Margin="20 10 0 0" Foreground="White" Opacity="1" Grid.Column="0" FontFamily="poppins">
+                    <Run Text="Dont have an account?" Foreground="WhiteSmoke" FontSize="20" />
                     <Run Text="&#x0a;Sign up now&#x0a;to make future checkouts &#x0a;faster and enjoy &#x0a;order history tracking." Foreground="White" FontSize="12"/>
-                </TextBlock>
-                <Button VerticalAlignment="Bottom" x:Name="signup" HorizontalAlignment="Left" Content="Signup" Background="Transparent" Foreground="WhiteSmoke" Margin="20 0 0 45" Click="Button_Click">
-                    <Button.Triggers>
-                        <EventTrigger RoutedEvent="Button.Click">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ThicknessAnimation Storyboard.TargetName="DetailGrid" Storyboard.TargetProperty="Margin" From="180 0 0 0" To="0 0 180 0" Duration="0:0:0.5"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Button.Triggers>
-                <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="2"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-<!--Have an account dialouge-->
-                <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Height="125" Width=" 180" Margin="20 10 0 0" Foreground="White" Opacity="1" Grid.Column="1">
-    <Run Text="Have an account?" Foreground="WhiteSmoke" FontSize="15" />
+                    </TextBlock>
+                    <Button VerticalAlignment="Bottom" x:Name="signup" HorizontalAlignment="Right" Content="Signup" Background="Transparent" Foreground="WhiteSmoke" Margin="20 0 30 45" Padding="3 3 3 3" Click="Button_Click" FontFamily="poppins">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ThicknessAnimation Storyboard.TargetName="DetailGrid" Storyboard.TargetProperty="Margin" From="260 0 0 0" To="0 0 260 0" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="3"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <!--Have an account dialouge-->
+                    <TextBlock VerticalAlignment="Top" HorizontalAlignment="Right" Height="125" Width=" 180" Margin="20 10 30 0" Foreground="White" Opacity="1" Grid.Column="1" FontFamily="poppins">
+    <Run Text="Have an account?" Foreground="WhiteSmoke" FontSize="20" />
     <Run Text="&#x0a;log in now&#x0a;to manage your account and &#x0a;transactions." Foreground="White" FontSize="12"/>
-                </TextBlock>
-                <Button VerticalAlignment="Bottom" x:Name="Login" HorizontalAlignment="Left" Content="Login" Background="Transparent" Foreground="WhiteSmoke" Margin="20 0 0 45" Click="Button_Click_1" Grid.Column="1">
-                    <Button.Triggers>
-                        <EventTrigger RoutedEvent="Button.Click">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ThicknessAnimation Storyboard.TargetName="DetailGrid" Storyboard.TargetProperty="Margin" From="0 0 180 0" To="180 0 0 0" Duration="0:0:0.5"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Button.Triggers>
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="2"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
-            </Grid>
-<!-- Detail Grid-->
-            <Grid Height="225" Width="200" Background="WhiteSmoke" x:Name="DetailGrid" HorizontalAlignment="Center" Margin=" 0 0 180 0">
-                <TextBox x:Name="Username" Style="{StaticResource BottomBorderTextBoxStyle}" Height="20" Width="100" VerticalAlignment="Top" Margin="0 50 0 0"/>
-                <PasswordBox x:Name="password" Style="{StaticResource BottomBorderPasswordBoxStyle}" PasswordChar="~" Height="20" Width="100" VerticalAlignment="Top" Margin="0 100 0 0"/>
-                <Button Height="20 " Width="75" Content="" x:Name="LoginSignup" Padding="0 0 0 0" Margin=" 0 80 0 0" Background="Coral" Foreground="White" BorderBrush="Coral" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click_2">
-                    <Button.Resources>
-                        <Style TargetType="Border">
-                            <Setter Property="CornerRadius" Value="1"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                    </TextBlock>
+                    <Button VerticalAlignment="Bottom" x:Name="Login" HorizontalAlignment="Right" Content="Login" Background="Transparent" Foreground="WhiteSmoke" Margin="20 0 30 45" Padding="3 3 3 3" Click="Button_Click_1" Grid.Column="1">
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="Button.Click">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ThicknessAnimation Storyboard.TargetName="DetailGrid" Storyboard.TargetProperty="Margin" From="0 0 260 0" To="260 0 0 0" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="3"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
+                <!-- Detail Grid-->
+                <Grid Height="250" Width="300" Background="WhiteSmoke" x:Name="DetailGrid" HorizontalAlignment="Center" Margin="0 0 260 0">
+                    <Label Content="" x:Name="Header" Foreground="Coral" Margin="20 25 0 0" FontSize="25" FontFamily="poppins"/>
+                    <TextBox x:Name="Username" Style="{StaticResource BottomBorderTextBoxStyle}" Height="20" Width="150" VerticalAlignment="Top" Margin="0 75 0 0"/>
+                    <PasswordBox x:Name="password" Style="{StaticResource BottomBorderPasswordBoxStyle}" PasswordChar="~" Height="20" Width="150" VerticalAlignment="Top" Margin="0 120 0 0"/>
+                    <Button Height="25" Width="75" Content="gy" x:Name="LoginSignup" Margin=" 0 150 20 0" Background="Coral" Foreground="White" BorderBrush="Coral" VerticalAlignment="Center" HorizontalAlignment="Right" Click="Button_Click_2" VerticalContentAlignment="Center">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="1"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
