@@ -61,6 +61,7 @@ namespace personal_project
             scrollViewer.Content = uniformGrid;
             MainGrid.Children.Add(scrollViewer);
         }
+
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
 
