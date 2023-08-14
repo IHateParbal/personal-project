@@ -42,10 +42,7 @@ namespace personal_project
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-
-                int categoryIDToFilter = 1; // Change this to the desired CategoryID
-
-                string query = $"SELECT ItemName, Price FROM MenuItems WHERE CategoryID = {categoryIDToFilter}";
+                string query = $"SELECT * FROM MenuItems";
                 SqlCommand command = new SqlCommand(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
 
@@ -55,6 +52,7 @@ namespace personal_project
                 {
                     string itemName = reader["ItemName"].ToString();
                     decimal price = Convert.ToDecimal(reader["Price"]);
+
 
                     Button button = new Button
                     {
@@ -129,7 +127,7 @@ namespace personal_project
             // Add the ScrollViewer to the main window's content
             MainGrid.Children.Add(scrollViewer);
         }
-    }
+    
 
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
