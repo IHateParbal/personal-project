@@ -22,14 +22,15 @@ namespace personal_project
     public partial class POSSystemDisplay_Register : Window
     {
         string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\madgw\source\repos\Console\personal project\personal project\POS.mdf;Integrated Security=True;Connect Timeout=30";
-        private static readonly Color[] ButtonColors = { Colors.Tomato, Colors.CornflowerBlue, Colors.Salmon, Colors.Coral, Colors.LightSeaGreen };
         public POSSystemDisplay_Register()
         {
             InitializeComponent();
+
+
             // Create a ScrollViewer
             ScrollViewer scrollViewer = new ScrollViewer
             {
-                VerticalScrollBarVisibility = ScrollBarVisibility.Auto
+                VerticalScrollBarVisibility = ScrollBarVisibility.Hidden
             };
 
             // Create a UniformGrid
@@ -42,72 +43,66 @@ namespace personal_project
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = $"SELECT * FROM MenuItems";
+
+                string query = "SELECT MI.MenuItemID, MI.ItemName, MI.Price, C.CategoryName FROM MenuItems MI JOIN Categories C ON MI.CategoryID = C.CategoryID;";
                 SqlCommand command = new SqlCommand(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
-
-                int colorIndex = 0;
-
                 while (reader.Read())
                 {
                     string itemName = reader["ItemName"].ToString();
-                    decimal price = Convert.ToDecimal(reader["Price"]);
-
-
+                    int price = Convert.ToInt32(reader["Price"]);
+                    string CategoryID = reader["CategoryName"].ToString();
+                    int MenuItemID = Convert.ToInt32(reader["MenuItemID"]);
                     Button button = new Button
                     {
                         Height = 125,
                         Width = 125,
-                        Background = new SolidColorBrush(ButtonColors[colorIndex % ButtonColors.Length]),
                         Margin = new Thickness(10),
                         FontSize = 20
                     };
-
                     Grid grid = new Grid
                     {
                         Height = 120,
                         Width = 120
                     };
-
                     Label label1 = new Label
                     {
-                        Content = "01",
+                        Content = MenuItemID,
                         HorizontalAlignment = HorizontalAlignment.Right,
                         VerticalAlignment = VerticalAlignment.Top,
                         FontSize = 15,
                         FontWeight = FontWeights.SemiBold,
                         FontFamily = new FontFamily("poppins")
                     };
-
                     Label label2 = new Label
                     {
-                        Content = "breakfast",
+                        Content = CategoryID,
                         HorizontalAlignment = HorizontalAlignment.Left,
                         VerticalAlignment = VerticalAlignment.Top,
                         FontSize = 15,
                         FontWeight = FontWeights.SemiBold,
                         FontFamily = new FontFamily("poppins")
                     };
-
-                    Label label3 = new Label
+                    TextBlock label3 = new TextBlock
                     {
-                        Content = itemName,
+                        Text = itemName,
                         HorizontalAlignment = HorizontalAlignment.Center,
                         VerticalAlignment = VerticalAlignment.Center,
                         FontFamily = new FontFamily("poppins"),
-                        FontSize = 30
+                        FontSize = 17,
+                        Width = 120,
+                        TextWrapping = TextWrapping.Wrap
+                        
                     };
-
                     Label label4 = new Label
                     {
-                        Content = price.ToString(),
+                        Content = $"Rs. {price.ToString()}",
                         HorizontalAlignment = HorizontalAlignment.Right,
                         VerticalAlignment = VerticalAlignment.Bottom,
-                        FontSize = 13,
+                        FontSize = 14,
                         FontWeight = FontWeights.SemiBold,
                         FontFamily = new FontFamily("poppins")
                     };
-
                     grid.Children.Add(label1);
                     grid.Children.Add(label2);
                     grid.Children.Add(label3);
@@ -115,19 +110,12 @@ namespace personal_project
 
                     button.Content = grid;
 
-                    colorIndex++;
-
                     uniformGrid.Children.Add(button);
                 }
             }
-
-            // Set the content of the ScrollViewer to the UniformGrid
             scrollViewer.Content = uniformGrid;
-
-            // Add the ScrollViewer to the main window's content
             MainGrid.Children.Add(scrollViewer);
         }
-    
 
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
