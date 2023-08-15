@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static personal_project.POSSystemDisplay_Register;
 
 namespace personal_project
 {
@@ -21,11 +26,11 @@ namespace personal_project
     /// </summary>
     public partial class POSSystemDisplay_Register : Window
     {
+        private ObservableCollection<MenuItemData> menuItemsData = new ObservableCollection<MenuItemData>();
         string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\madgw\source\repos\Console\personal project\personal project\POS.mdf;Integrated Security=True;Connect Timeout=30";
         public POSSystemDisplay_Register()
         {
             InitializeComponent();
-
 
             // Create a ScrollViewer
             ScrollViewer scrollViewer = new ScrollViewer
@@ -52,7 +57,6 @@ namespace personal_project
                     string itemName = reader["ItemName"].ToString();
                     int price = Convert.ToInt32(reader["Price"]);
                     string CategoryID = reader["CategoryName"].ToString();
-                    int MenuItemID = Convert.ToInt32(reader["MenuItemID"]);
                     Button button = new Button
                     {
                         Height = 125,
@@ -65,15 +69,7 @@ namespace personal_project
                         Height = 120,
                         Width = 120
                     };
-                    Label label1 = new Label
-                    {
-                        Content = MenuItemID,
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        VerticalAlignment = VerticalAlignment.Top,
-                        FontSize = 15,
-                        FontWeight = FontWeights.SemiBold,
-                        FontFamily = new FontFamily("poppins")
-                    };
+                    
                     Label label2 = new Label
                     {
                         Content = CategoryID,
@@ -103,16 +99,24 @@ namespace personal_project
                         FontWeight = FontWeights.SemiBold,
                         FontFamily = new FontFamily("poppins")
                     };
-                    grid.Children.Add(label1);
+
+                    MenuItemData itemData = new MenuItemData
+                    {
+                        ItemName = itemName,
+                        Price = price
+                    };
+                    menuItemsData.Add(itemData);
+
                     grid.Children.Add(label2);
                     grid.Children.Add(label3);
                     grid.Children.Add(label4);
-
                     button.Content = grid;
 
+                    button.Click += Button_Click;
                     uniformGrid.Children.Add(button);
                 }
             }
+            SelectedMenuPrice.ItemsSource = menuItemsData;
             scrollViewer.Content = uniformGrid;
             MainGrid.Children.Add(scrollViewer);
         }
@@ -181,5 +185,36 @@ namespace personal_project
         {
 
         }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button clickedButton)
+            {
+                if (clickedButton.Content is Grid buttonGrid)
+                {
+                    foreach (var uiElement in buttonGrid.Children)
+                    {
+                        if (uiElement is TextBlock textBlock)
+                        {
+                            string labelText3 = textBlock.Text;
+                        }
+                        else if (uiElement is Label label)
+                        {
+                            string labelText4 = label.Content.ToString();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           
+        }
+        public class MenuItemData
+        {
+            public string ItemName { get; set; }
+            public int Price { get; set; }
+        }
     }
+
 }
