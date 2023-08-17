@@ -77,7 +77,7 @@ namespace personal_project
                         FontSize = 17,
                         Width = 120,
                         TextWrapping = TextWrapping.Wrap
- 
+
                     };
                     Label label4 = new Label
                     {
@@ -168,7 +168,7 @@ namespace personal_project
         {
 
             string labelText3 = null;
-            string labelText4 = null;
+            int labelText4 = 0; // Initialize labelText4 as an integer
 
             if (sender is Button clickedButton)
             {
@@ -182,34 +182,24 @@ namespace personal_project
                         }
                         else if (uiElement is Label label)
                         {
-                            labelText4 = label.Content.ToString();
+                            if (int.TryParse(label.Content?.ToString(), out int parsedValue))
+                            {
+                                labelText4 = parsedValue;
+                            }
                         }
                     }
                 }
             }
 
-            ScrollViewer scrollViewer = new ScrollViewer
-            {
-                VerticalScrollBarVisibility = ScrollBarVisibility.Hidden,
-            };
-
-            // Create a UniformGrid
-            UniformGrid uniformGrid = new UniformGrid
-            {
-                Columns = 1,
-            };
             Button button = new Button
             {
                 Height = 80,
                 Width = 250,
-                Margin = new Thickness(2),
-                HorizontalContentAlignment = HorizontalAlignment.Left,
+                Margin = new Thickness(5),
+                HorizontalContentAlignment = HorizontalAlignment.Left
             };
-            StackPanel grid = new StackPanel
-            {
-                Height = 80,
-                Width = 250
-            };
+
+            Grid grid = new Grid();
 
             TextBlock label3 = new TextBlock
             {
@@ -221,8 +211,10 @@ namespace personal_project
                 FontWeight = FontWeights.Bold,
                 TextWrapping = TextWrapping.Wrap,
                 Height = 50,
-                Width = 225
+                Width = 225,
+                Margin = new Thickness(0,0,0,15),
             };
+
             Label label4 = new Label
             {
                 Content = labelText4,
@@ -235,20 +227,40 @@ namespace personal_project
 
             grid.Children.Add(label3);
             grid.Children.Add(label4);
+
+            // Set the grid as the button's content
             button.Content = grid;
 
-            button.Click += Button_ClickTab;
-            uniformGrid.Children.Add(button);
+            selectedItemMiniTab.Children.Add(button);
 
-            scrollViewer.Content = uniformGrid;
-            selectedItemMiniTab.Children.Add(scrollViewer);
+            button.Click += Button_ClickTab;
         }
 
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
         {
-           
+
         }
         private void Button_ClickTab(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CashPaymnt_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CardPayment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void E_WalletPayment_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PlaceOrder_Click(object sender, RoutedEventArgs e)
         {
 
         }
