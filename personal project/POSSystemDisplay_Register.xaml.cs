@@ -27,6 +27,9 @@ namespace personal_project
     /// </summary>
     public partial class POSSystemDisplay_Register : Window
     {
+        int sum = 0;
+        int increase = 0;
+        private int count = 0;
         string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\madgw\source\repos\Console\personal project\personal project\POS.mdf;Integrated Security=True;Connect Timeout=30";
         public POSSystemDisplay_Register()
         {
@@ -81,7 +84,7 @@ namespace personal_project
                     };
                     Label label4 = new Label
                     {
-                        Content = $"Rs. {price.ToString()}",
+                        Content =price.ToString(),
                         HorizontalAlignment = HorizontalAlignment.Left,
                         VerticalAlignment = VerticalAlignment.Bottom,
                         FontSize = 15,
@@ -102,7 +105,7 @@ namespace personal_project
 
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
 
         private void Reservation_Click(object sender, RoutedEventArgs e)
@@ -164,11 +167,11 @@ namespace personal_project
         {
 
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e )
         {
 
             string labelText3 = null;
-            int labelText4 = 0; // Initialize labelText4 as an integer
+            string labelText4 = null;
 
             if (sender is Button clickedButton)
             {
@@ -182,10 +185,7 @@ namespace personal_project
                         }
                         else if (uiElement is Label label)
                         {
-                            if (int.TryParse(label.Content?.ToString(), out int parsedValue))
-                            {
-                                labelText4 = parsedValue;
-                            }
+                            labelText4 = label.Content.ToString();
                         }
                     }
                 }
@@ -212,7 +212,7 @@ namespace personal_project
                 TextWrapping = TextWrapping.Wrap,
                 Height = 50,
                 Width = 225,
-                Margin = new Thickness(0,0,0,15),
+                Margin = new Thickness(0, 0, 0, 15),
             };
 
             Label label4 = new Label
@@ -224,7 +224,6 @@ namespace personal_project
                 FontWeight = FontWeights.SemiBold,
                 FontFamily = new FontFamily("poppins")
             };
-
             grid.Children.Add(label3);
             grid.Children.Add(label4);
 
@@ -234,6 +233,22 @@ namespace personal_project
             selectedItemMiniTab.Children.Add(button);
 
             button.Click += Button_ClickTab;
+
+
+
+
+
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ///
+
+            int priceint = int.Parse(labelText4);
+            int Vat = 13;
+                sum += priceint;
+            double finalPrice = sum + (0.13 * sum);
+                BillReport.Text = "SubTotal Price:          " + sum + "\nVAT:                           " +Vat+ "%\nTotal Price:                "+finalPrice;
+
         }
 
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
@@ -242,7 +257,24 @@ namespace personal_project
         }
         private void Button_ClickTab(object sender, RoutedEventArgs e)
         {
+            string labelText4 = null;
 
+            if (sender is Button clickedButton)
+            {
+                if (clickedButton.Content is Grid buttonGrid)
+                {
+                    foreach (var uiElement in buttonGrid.Children)
+                    {
+                        if (uiElement is Label label)
+                        {
+                            labelText4 = label.Content.ToString();
+                        }
+                    }
+                }
+            }
+            increase = sum;
+             increase = increase+increase;
+            BillReport.Text = "SubTotal Price:             " + increase;
         }
 
         private void CashPaymnt_Click(object sender, RoutedEventArgs e)
