@@ -83,7 +83,6 @@ namespace personal_project
                 Height = 125,
                 Width = 125
             };
-            
             TextBlock label3 = new TextBlock
             {
                 Text = itemName,
@@ -123,8 +122,6 @@ namespace personal_project
                     "WHERE C.CategoryName = 'Breakfast';";
                 SqlCommand command = new SqlCommand(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
-
-
                 while (reader.Read())
                 {
                     string itemName = reader["ItemName"].ToString();
@@ -333,7 +330,7 @@ namespace personal_project
         {
 
         }
-        private void Button_Click(object sender, RoutedEventArgs e )
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
 
             string labelText3 = null;
@@ -357,10 +354,15 @@ namespace personal_project
                 }
             }
 
+            StackPanel mainStackPanel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal
+            };
+
             Button button = new Button
             {
                 Height = 80,
-                Width = 250,
+                Width = 245,
                 Margin = new Thickness(5),
                 HorizontalContentAlignment = HorizontalAlignment.Left
             };
@@ -390,19 +392,58 @@ namespace personal_project
                 FontWeight = FontWeights.SemiBold,
                 FontFamily = new FontFamily("poppins")
             };
+            Label labelQuantity = new Label
+            {
+                Content = "x"+Counter(),
+                HorizontalAlignment = HorizontalAlignment.Right,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                FontSize = 15,
+                FontWeight = FontWeights.SemiBold,
+                FontFamily = new FontFamily("poppins")
+            };
             grid.Children.Add(label3);
             grid.Children.Add(label4);
-
-            // Set the grid as the button's content
+            grid.Children.Add(labelQuantity);
+            mainStackPanel.Children.Add(button);
             button.Content = grid;
+            button.Click += Button_ClickDelete;
 
-            selectedItemMiniTab.Children.Add(button);
+            StackPanel nestedStackPanel = new StackPanel
+            {
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Center,
+            };
 
-            button.Click += Button_ClickTab;
+            StackPanel nestedHorizontalStackPanel = new StackPanel
+            {
+                Orientation = Orientation.Horizontal
+            };
+
+            Button nestedButton2 = new Button
+            {
+                Width = 35,
+                Height = 30,
+                Content = "+",
+
+            };
+            nestedHorizontalStackPanel.Children.Add(nestedButton2);
+            nestedButton2.Click += Button_ClickIncrease;
 
 
+            Button nestedButton3 = new Button
+            {
+                Width = 35,
+                Height = 30,
+                Content = "-",
+            };
+            nestedHorizontalStackPanel.Children.Add(nestedButton3);
+            nestedButton3.Click += Button_ClickDecrease;
 
+            nestedStackPanel.Children.Add(nestedHorizontalStackPanel);
 
+            mainStackPanel.Children.Add(nestedStackPanel);
+
+            selectedItemMiniTab.Children.Add(mainStackPanel);
 
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -411,36 +452,15 @@ namespace personal_project
 
             int priceint = int.Parse(labelText4);
             int Vat = 13;
-                sum += priceint;
+            sum += priceint;
             double finalPrice = sum + (0.13 * sum);
-                BillReport.Text = "SubTotal Price:          " + sum + "\nVAT:                           " +Vat+ "%\nTotal Price:                "+finalPrice;
+            BillReport.Text = "SubTotal Price:          " + sum + "\nVAT:                           " + Vat + "%\nTotal Price:                " + finalPrice;
 
         }
 
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-        }
-        private void Button_ClickTab(object sender, RoutedEventArgs e)
-        {
-            string labelText4 = null;
-
-            if (sender is Button clickedButton)
-            {
-                if (clickedButton.Content is Grid buttonGrid)
-                {
-                    foreach (var uiElement in buttonGrid.Children)
-                    {
-                        if (uiElement is Label label)
-                        {
-                            labelText4 = label.Content.ToString();
-                        }
-                    }
-                }
-            }
-            increase = sum;
-             increase = increase+increase;
-            BillReport.Text = "SubTotal Price:             " + increase;
         }
 
         private void CashPaymnt_Click(object sender, RoutedEventArgs e)
@@ -461,6 +481,54 @@ namespace personal_project
         private void PlaceOrder_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+        private void Button_ClickDelete(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button deleteButton)
+            {
+                if (deleteButton.Parent is StackPanel mainStackPanel)
+                {
+                    if (mainStackPanel.Parent is StackPanel selectedItemMiniTab)
+                    {
+                        selectedItemMiniTab.Children.Remove(mainStackPanel);
+
+                        if (deleteButton.Content is Grid buttonGrid)
+                        {
+                            foreach (var uiElement in buttonGrid.Children)
+                            {
+                                if (uiElement is Label label)
+                                {
+                                    if (int.TryParse(label.Content.ToString(), out int priceToDelete))
+                                    {
+                                        sum -= priceToDelete;
+                                        UpdateBillReport();
+                                        return;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        private void UpdateBillReport()
+        {
+            int Vat = 13;
+            double finalPrice = sum + (0.13 * sum);
+            BillReport.Text = "SubTotal Price:          " + sum + "\nVAT:                           " + Vat + "%\nTotal Price:                " + finalPrice;
+        }
+        private void Button_ClickDecrease(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Button_ClickIncrease(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private int Counter()
+        {
+
+            return 0;
         }
     }
 
