@@ -27,6 +27,8 @@ namespace personal_project
     /// </summary>
     public partial class POSSystemDisplay_Register : Window
     {
+        private ScrollViewer scrollViewer;
+        private UniformGrid uniformGrid1;
         int sum = 0;
         int increase = 0;
         private int count = 0;
@@ -35,13 +37,13 @@ namespace personal_project
         {
             InitializeComponent();
             // Create a ScrollViewer
-            ScrollViewer scrollViewer = new ScrollViewer
+            scrollViewer = new ScrollViewer
             {
                 VerticalScrollBarVisibility = ScrollBarVisibility.Hidden
             };
 
             // Create a UniformGrid
-            UniformGrid uniformGrid1 = new UniformGrid
+            uniformGrid1 = new UniformGrid
             {
                 Columns = 4,
                 Margin = new Thickness(10)
@@ -55,54 +57,258 @@ namespace personal_project
                 SqlCommand command = new SqlCommand(query, connection);
                 SqlDataReader reader = command.ExecuteReader();
 
+
                 while (reader.Read())
                 {
                     string itemName = reader["ItemName"].ToString();
                     int price = Convert.ToInt32(reader["Price"]);
-                    Button button = new Button
-                    {
-                        Height = 125,
-                        Width = 125,
-                        Margin = new Thickness(10),
-                        FontSize = 20
-                    };
-                    Grid grid = new Grid
-                    {
-                        Height = 125,
-                        Width = 125
-                    };
-                    TextBlock label3 = new TextBlock
-                    {
-                        Text = itemName,
-                        HorizontalAlignment = HorizontalAlignment.Center,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        FontFamily = new FontFamily("poppins"),
-                        FontSize = 17,
-                        Width = 120,
-                        TextWrapping = TextWrapping.Wrap
-
-                    };
-                    Label label4 = new Label
-                    {
-                        Content =price.ToString(),
-                        HorizontalAlignment = HorizontalAlignment.Left,
-                        VerticalAlignment = VerticalAlignment.Bottom,
-                        FontSize = 15,
-                        FontWeight = FontWeights.SemiBold,
-                        FontFamily = new FontFamily("poppins")
-                    };
-                    grid.Children.Add(label3);
-                    grid.Children.Add(label4);
-                    button.Content = grid;
-
-                    button.Click += Button_Click;
+                    Button button = ButtonCreation(itemName, price);
                     uniformGrid1.Children.Add(button);
                 }
             }
             scrollViewer.Content = uniformGrid1;
             MainGrid.Children.Add(scrollViewer);
         }
+        private Button ButtonCreation(string itemName, int price)
+        {
+            Button button = new Button
+            {
+                Height = 125,
+                Width = 125,
+                Margin = new Thickness(10),
+                FontSize = 20
+            };
+            Grid grid = new Grid
+            {
+                Height = 125,
+                Width = 125
+            };
+            
+            TextBlock label3 = new TextBlock
+            {
+                Text = itemName,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Top,
+                Margin = new Thickness(0,10,0,0),
+                FontFamily = new FontFamily("poppins"),
+                FontSize = 17,
+                Width = 120,
+                TextWrapping = TextWrapping.Wrap
+            };
+            Label label4 = new Label
+            {
+                Content = price.ToString(),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Bottom,
+                FontSize = 15,
+                FontWeight = FontWeights.SemiBold,
+                FontFamily = new FontFamily("poppins")
+            };
+            grid.Children.Add(label3);
+            grid.Children.Add(label4);
+            button.Content = grid;
 
+            button.Click += Button_Click;
+            return button;
+        }
+        private void Breakfast_Click(object sender, RoutedEventArgs e)
+        {
+            uniformGrid1.Children.Clear();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT MI.MenuItemID, MI.ItemName, MI.Price, C.CategoryName FROM MenuItems MI JOIN Categories C ON MI.CategoryID = C.CategoryID " +
+                    "WHERE C.CategoryName = 'Breakfast';";
+                SqlCommand command = new SqlCommand(query, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+
+                while (reader.Read())
+                {
+                    string itemName = reader["ItemName"].ToString();
+                    int price = Convert.ToInt32(reader["Price"]);
+                    Button button = ButtonCreation(itemName, price);
+                    uniformGrid1.Children.Add(button);
+                }
+            }
+            scrollViewer.Content = uniformGrid1;
+        }
+        private void Alcohol_Click(object sender, RoutedEventArgs e)
+        {
+            uniformGrid1.Children.Clear();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT MI.MenuItemID, MI.ItemName, MI.Price, C.CategoryName FROM MenuItems MI JOIN Categories C ON MI.CategoryID = C.CategoryID " +
+                    "WHERE C.CategoryName = 'Alcohols';";
+                SqlCommand command = new SqlCommand(query, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+
+                while (reader.Read())
+                {
+                    string itemName = reader["ItemName"].ToString();
+                    int price = Convert.ToInt32(reader["Price"]);
+                    Button button = ButtonCreation(itemName, price);
+                    uniformGrid1.Children.Add(button);
+                }
+            }
+            scrollViewer.Content = uniformGrid1;
+        }
+
+        private void Drinks_Click(object sender, RoutedEventArgs e)
+        {
+            uniformGrid1.Children.Clear();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT MI.MenuItemID, MI.ItemName, MI.Price, C.CategoryName FROM MenuItems MI JOIN Categories C ON MI.CategoryID = C.CategoryID " +
+                    "WHERE C.CategoryName = 'Drinks';";
+                SqlCommand command = new SqlCommand(query, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+
+                while (reader.Read())
+                {
+                    string itemName = reader["ItemName"].ToString();
+                    int price = Convert.ToInt32(reader["Price"]);
+                    Button button = ButtonCreation(itemName, price);
+                    uniformGrid1.Children.Add(button);
+                }
+            }
+            scrollViewer.Content = uniformGrid1;
+        }
+
+        private void Desserts_Click(object sender, RoutedEventArgs e)
+        {
+            uniformGrid1.Children.Clear();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT MI.MenuItemID, MI.ItemName, MI.Price, C.CategoryName FROM MenuItems MI JOIN Categories C ON MI.CategoryID = C.CategoryID " +
+                    "WHERE C.CategoryName = 'Desserts';";
+                SqlCommand command = new SqlCommand(query, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+
+                while (reader.Read())
+                {
+                    string itemName = reader["ItemName"].ToString();
+                    int price = Convert.ToInt32(reader["Price"]);
+                    Button button = ButtonCreation(itemName, price);
+                    uniformGrid1.Children.Add(button);
+                }
+            }
+            scrollViewer.Content = uniformGrid1;
+        }
+
+        private void MainCourse_Click(object sender, RoutedEventArgs e)
+        {
+            uniformGrid1.Children.Clear();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT MI.MenuItemID, MI.ItemName, MI.Price, C.CategoryName FROM MenuItems MI JOIN Categories C ON MI.CategoryID = C.CategoryID " +
+                    "WHERE C.CategoryName = 'Main Course';";
+                SqlCommand command = new SqlCommand(query, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+
+                while (reader.Read())
+                {
+                    string itemName = reader["ItemName"].ToString();
+                    int price = Convert.ToInt32(reader["Price"]);
+                    Button button = ButtonCreation(itemName, price);
+                    uniformGrid1.Children.Add(button);
+                }
+            }
+            scrollViewer.Content = uniformGrid1;
+        }
+
+        private void Pasta_Click(object sender, RoutedEventArgs e)
+        {
+            uniformGrid1.Children.Clear();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT MI.MenuItemID, MI.ItemName, MI.Price, C.CategoryName FROM MenuItems MI JOIN Categories C ON MI.CategoryID = C.CategoryID" +
+                    " WHERE C.CategoryName = 'Pasta';";
+                SqlCommand command = new SqlCommand(query, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+
+                while (reader.Read())
+                {
+                    string itemName = reader["ItemName"].ToString();
+                    int price = Convert.ToInt32(reader["Price"]);
+                    Button button = ButtonCreation(itemName, price);
+                    uniformGrid1.Children.Add(button);
+                }
+            }
+            scrollViewer.Content = uniformGrid1;
+        }
+
+        private void Soups_Click(object sender, RoutedEventArgs e)
+        {
+            uniformGrid1.Children.Clear();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT MI.MenuItemID, MI.ItemName, MI.Price, C.CategoryName FROM MenuItems MI JOIN Categories C ON MI.CategoryID = C.CategoryID " +
+                    "WHERE C.CategoryName = 'Soup';";
+                SqlCommand command = new SqlCommand(query, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+
+                while (reader.Read())
+                {
+                    string itemName = reader["ItemName"].ToString();
+                    int price = Convert.ToInt32(reader["Price"]);
+                    Button button = ButtonCreation(itemName, price);
+                    uniformGrid1.Children.Add(button);
+                }
+            }
+            scrollViewer.Content = uniformGrid1;
+        }
+
+        private void Special_Click(object sender, RoutedEventArgs e)
+        {
+            uniformGrid1.Children.Clear();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT MI.MenuItemID, MI.ItemName, MI.Price, C.CategoryName FROM MenuItems MI JOIN Categories C ON MI.CategoryID = C.CategoryID " +
+                    "WHERE C.CategoryName = 'Special';";
+                SqlCommand command = new SqlCommand(query, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+
+                while (reader.Read())
+                {
+                    string itemName = reader["ItemName"].ToString();
+                    int price = Convert.ToInt32(reader["Price"]);
+                    Button button = ButtonCreation(itemName, price);
+                    uniformGrid1.Children.Add(button);
+                }
+            }
+            scrollViewer.Content = uniformGrid1;
+        }
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
             
@@ -124,46 +330,6 @@ namespace personal_project
         }
 
         private void Accounting_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Breakfast_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Alcohol_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Drinks_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Desserts_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void MainCourse_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Pasta_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Soups_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Special_Click(object sender, RoutedEventArgs e)
         {
 
         }
