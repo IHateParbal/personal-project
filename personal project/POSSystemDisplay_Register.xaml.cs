@@ -27,12 +27,16 @@ namespace personal_project
     /// </summary>
     public partial class POSSystemDisplay_Register : Window
     {
+        private string labelText3 = null;
+        private string labelText4 = null;
         private ScrollViewer scrollViewer;
         private UniformGrid uniformGrid1;
         int sum = 0;
-        int increase = 0;
-        private int count = 0;
+        private int counter = 1;
+        private Button button1; 
+        private Label labelQuantity;
         string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\madgw\source\repos\Console\personal project\personal project\POS.mdf;Integrated Security=True;Connect Timeout=30";
+       
         public POSSystemDisplay_Register()
         {
             InitializeComponent();
@@ -332,130 +336,131 @@ namespace personal_project
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            counter = 1;
+                 labelText3 = null;
+                 labelText4 = null;
 
-            string labelText3 = null;
-            string labelText4 = null;
-
-            if (sender is Button clickedButton)
-            {
-                if (clickedButton.Content is Grid buttonGrid)
+                if (sender is Button clickedButton)
                 {
-                    foreach (var uiElement in buttonGrid.Children)
+                    if (clickedButton.Content is Grid buttonGrid)
                     {
-                        if (uiElement is TextBlock textBlock)
+                        foreach (var uiElement in buttonGrid.Children)
                         {
-                            labelText3 = textBlock.Text.ToString();
-                        }
-                        else if (uiElement is Label label)
-                        {
-                            labelText4 = label.Content.ToString();
+                            if (uiElement is TextBlock textBlock)
+                            {
+                                labelText3 = textBlock.Text.ToString();
+                            }
+                            else if (uiElement is Label label)
+                            {
+                                labelText4 = label.Content.ToString();
+                            }
                         }
                     }
                 }
-            }
+            
+                StackPanel mainStackPanel = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal
+                };
 
-            StackPanel mainStackPanel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal
-            };
+                button1 = new Button
+                {
+                    Height = 80,
+                    Width = 245,
+                    Margin = new Thickness(5),
+                    HorizontalContentAlignment = HorizontalAlignment.Left
+                };
 
-            Button button = new Button
-            {
-                Height = 80,
-                Width = 245,
-                Margin = new Thickness(5),
-                HorizontalContentAlignment = HorizontalAlignment.Left
-            };
+                Grid grid = new Grid();
 
-            Grid grid = new Grid();
+                TextBlock label3 = new TextBlock
+                {
+                    Text = labelText3,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    FontFamily = new FontFamily("poppins"),
+                    FontSize = 17,
+                    FontWeight = FontWeights.Bold,
+                    TextWrapping = TextWrapping.Wrap,
+                    Height = 50,
+                    Width = 225,
+                    Margin = new Thickness(0, 0, 0, 15),
+                };
 
-            TextBlock label3 = new TextBlock
-            {
-                Text = labelText3,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-                FontFamily = new FontFamily("poppins"),
-                FontSize = 17,
-                FontWeight = FontWeights.Bold,
-                TextWrapping = TextWrapping.Wrap,
-                Height = 50,
-                Width = 225,
-                Margin = new Thickness(0, 0, 0, 15),
-            };
+                Label label4 = new Label
+                {
+                    Content = labelText4,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    FontSize = 15,
+                    FontWeight = FontWeights.SemiBold,
+                    FontFamily = new FontFamily("poppins")
+                };
+                labelQuantity = new Label
+                {
+                    Content = "x" + counter,
+                    HorizontalAlignment = HorizontalAlignment.Right,
+                    VerticalAlignment = VerticalAlignment.Bottom,
+                    FontSize = 15,
+                    FontWeight = FontWeights.SemiBold,
+                    FontFamily = new FontFamily("poppins")
+                };
+                grid.Children.Add(label3);
+                grid.Children.Add(label4);
+                grid.Children.Add(labelQuantity);
+                mainStackPanel.Children.Add(button1);
+                button1.Content = grid;
+                button1.Click += Button_ClickDelete;
 
-            Label label4 = new Label
-            {
-                Content = labelText4,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Bottom,
-                FontSize = 15,
-                FontWeight = FontWeights.SemiBold,
-                FontFamily = new FontFamily("poppins")
-            };
-            Label labelQuantity = new Label
-            {
-                Content = "x"+Counter(),
-                HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalAlignment = VerticalAlignment.Bottom,
-                FontSize = 15,
-                FontWeight = FontWeights.SemiBold,
-                FontFamily = new FontFamily("poppins")
-            };
-            grid.Children.Add(label3);
-            grid.Children.Add(label4);
-            grid.Children.Add(labelQuantity);
-            mainStackPanel.Children.Add(button);
-            button.Content = grid;
-            button.Click += Button_ClickDelete;
+                StackPanel nestedStackPanel = new StackPanel
+                {
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Center,
+                };
 
-            StackPanel nestedStackPanel = new StackPanel
-            {
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
+                StackPanel nestedHorizontalStackPanel = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal
+                };
 
-            StackPanel nestedHorizontalStackPanel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal
-            };
+                Button nestedButton2 = new Button
+                {
+                    Width = 35,
+                    Height = 30,
+                    Content = "+",
 
-            Button nestedButton2 = new Button
-            {
-                Width = 35,
-                Height = 30,
-                Content = "+",
-
-            };
-            nestedHorizontalStackPanel.Children.Add(nestedButton2);
-            nestedButton2.Click += Button_ClickIncrease;
-
-
-            Button nestedButton3 = new Button
-            {
-                Width = 35,
-                Height = 30,
-                Content = "-",
-            };
-            nestedHorizontalStackPanel.Children.Add(nestedButton3);
-            nestedButton3.Click += Button_ClickDecrease;
-
-            nestedStackPanel.Children.Add(nestedHorizontalStackPanel);
-
-            mainStackPanel.Children.Add(nestedStackPanel);
-
-            selectedItemMiniTab.Children.Add(mainStackPanel);
+                };
+                nestedHorizontalStackPanel.Children.Add(nestedButton2);
+                nestedButton2.Click += Button_ClickIncrease;
 
 
-            /////////////////////////////////////////////////////////////////////////////////////////////////////////
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////
-            ///
+                Button nestedButton3 = new Button
+                {
+                    Width = 35,
+                    Height = 30,
+                    Content = "-",
+                };
+                nestedHorizontalStackPanel.Children.Add(nestedButton3);
+                nestedButton3.Click += Button_ClickDecrease;
 
-            int priceint = int.Parse(labelText4);
-            int Vat = 13;
-            sum += priceint;
-            double finalPrice = sum + (0.13 * sum);
-            BillReport.Text = "SubTotal Price:          " + sum + "\nVAT:                           " + Vat + "%\nTotal Price:                " + finalPrice;
+                nestedStackPanel.Children.Add(nestedHorizontalStackPanel);
 
+                mainStackPanel.Children.Add(nestedStackPanel);
+
+                selectedItemMiniTab.Children.Add(mainStackPanel);
+
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                ///
+
+                int priceint = int.Parse(labelText4) * counter;
+                int Vat = 13;
+                sum += priceint;
+                double finalPrice = sum + (0.13 * sum);
+                BillReport.Text = "SubTotal Price:          " + sum + "\nVAT:                           " + Vat + "%\nTotal Price:                " + finalPrice;
+            
+            
         }
 
         private void Search_TextChanged(object sender, TextChangedEventArgs e)
@@ -519,17 +524,49 @@ namespace personal_project
         }
         private void Button_ClickDecrease(object sender, RoutedEventArgs e)
         {
+            if (counter > 1) 
+            {
+                counter--; 
+                labelQuantity.Content = "x" + counter; 
+                UpdateMainButtonContent();
+                UpdateBill(counter, labelText3, labelText4); // Update calculations and BillReport.Text
 
+            }
         }
+
         private void Button_ClickIncrease(object sender, RoutedEventArgs e)
         {
-
+            counter++; 
+            labelQuantity.Content = "x" + counter; 
+            UpdateMainButtonContent();
+            UpdateBill(counter, labelText3, labelText4); // Update calculations and BillReport.Text
         }
-        private int Counter()
+        private void UpdateMainButtonContent()
         {
-
-            return 0;
+            Grid buttonGrid = button1.Content as Grid;
+            if (buttonGrid != null)
+            {
+                foreach (var uiElement in buttonGrid.Children)
+                {
+                    if (uiElement is Label label && label.Content == labelQuantity)
+                    {
+                        label.Content = labelQuantity.Content;
+                        break;
+                    }
+                }
+            }
         }
+
+        private void UpdateBill(int counter, string labelText3, string labelText4)
+        {
+            int priceint = int.Parse(labelText4) * counter;
+            int Vat = 13;
+            double finalPrice = priceint + (0.13 * priceint);
+            BillReport.Text = "SubTotal Price:          " + priceint + "\nVAT:                           " + Vat + "%\nTotal Price:                " + finalPrice;
+        }
+
+
+
     }
 
 }
