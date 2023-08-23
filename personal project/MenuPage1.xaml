@@ -1,0 +1,81 @@
+﻿<Page x:Class="personal_project.MenuPage1"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:personal_project"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1024"
+      Title="MenuPage1">
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Foreground" Value="#111315"/>
+            <Setter Property="Background" Value="#fac1d9"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                    <Setter Property="BorderBrush" Value="#2d2d2d"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style TargetType="TextBox" x:Key="TextBoxSearch">
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="7"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="#2d2d2d"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#111315"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+    </Page.Resources>
+    <Grid>
+        <Grid Grid.Column="1" Margin="5,0,-5,1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="4.8*"/>
+                    <RowDefinition Height="5*"/>
+                </Grid.RowDefinitions>
+                <TextBox x:Name="Search" HorizontalAlignment="Right" Height="35" Width="245" Background="Transparent"  BorderThickness="2" BorderBrush="WhiteSmoke" Foreground="White" VerticalContentAlignment="Center" FontSize="20" TextAlignment="Left" Margin="0 0 110 0" Style="{StaticResource ResourceKey=TextBoxSearch}" Grid.Row="0"/>
+                <Button x:Name="Search_Button" Content="Search" FontFamily="poppins" Click="Search_Click" HorizontalAlignment="Right" Height="35" Width="100" Grid.Row="0" />
+                <UniformGrid Columns="4" Grid.Row="1" VerticalAlignment="Top" Margin="0 10 0 0">
+                    <Button Height="120" Width="120" x:Name="Breakfast" Content="Breakfast" Click="Breakfast_Click" Background="#cfdddb" Margin="10" FontSize="20"/>
+                    <Button Height="120" Width="120" x:Name="Soups" Content="Soups" Click="Soups_Click" Background="#e4cded" Margin="10" FontSize="20"/>
+                    <Button Height="120" Width="120" x:Name="Pasta" Content="Pasta" Click="Pasta_Click" Background="#c2dbe9" Margin="10" FontSize="20"/>
+                    <Button Height="120" Width="120" x:Name="Special" Content="Special" Click="Special_Click" Background="#c9caef" Margin="10" FontSize="20"/>
+                    <Button Height="120" Width="120" x:Name="MainCourse" Content="Main Course" Click="MainCourse_Click" Background="#fac1d9" Margin="10" FontSize="20"/>
+                    <Button Height="120" Width="120" x:Name="Desserts" Content="Desserts" Click="Desserts_Click" Background="#e5dade" Margin="10" FontSize="20"/>
+                    <Button Height="120" Width="120" x:Name="Drinks" Content="Drinks" Click="Drinks_Click" Background="#e5dade" Margin="10" FontSize="20"/>
+                    <Button Height="120" Width="120" x:Name="Alcohol" Content="Alcohol" Click="Alcohol_Click" Background="#c2e9dd" Margin="10" FontSize="20"/>
+                </UniformGrid>
+                <Grid x:Name="MainGrid" Grid.Row="2">
+
+                </Grid>
+            </Grid>
+            <StackPanel Grid.Column="1">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden"  Height="350" VerticalAlignment="Top">
+                    <StackPanel Name="selectedItemMiniTab" Margin="10" VerticalAlignment="Top">
+
+                    </StackPanel>
+                </ScrollViewer>
+                <TextBlock x:Name="BillReport" Height="200" Foreground="WhiteSmoke" FontSize="25"/>
+                <UniformGrid Columns="3" Margin="0 0 0 10">
+                    <Button Content="Cash" Margin="0 0 3 0" Click="CashPaymnt_Click" x:Name="CashPaymnt" Foreground="WhiteSmoke" FontFamily="poppins" FontSize="20" FontWeight="SemiBold" Background="#2d2d2d"/>
+                    <Button Content="Card" Margin="2 0 3 0" Click="CardPayment_Click" x:Name="CardPayment" Foreground="WhiteSmoke" FontFamily="poppins" FontSize="20" FontWeight="SemiBold" Background="#2d2d2d"/>
+                    <Button Content="E-Wallet" Margin="2 0 9 0" Click="E_WalletPayment_Click" x:Name="E_WalletPayment" Foreground="WhiteSmoke" FontFamily="poppins" FontSize="20" FontWeight="SemiBold" Background="#2d2d2d"/>
+                </UniformGrid>
+                <Button x:Name="PlaceOrder" Content="Place Order" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0 0 0 10" FontSize="30" Click="PlaceOrder_Click" Height="60" Width="275"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>
