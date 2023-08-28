@@ -20,8 +20,15 @@ namespace personal_project
     /// <summary>
     /// Interaction logic for MenuPage1.xaml
     /// </summary>
+    public class OrderItem
+    {
+        public int OrderQuantity { get; set; }
+        public double OrderPrice { get; set; }
+        public double Price { get; set; }
+    }
     public partial class MenuPage1 : Page
     {
+        List<OrderItem> orderItems = new List<OrderItem>();
         private string labelText3 = null;
         private string labelText4 = null;
         private ScrollViewer scrollViewer;
@@ -31,6 +38,8 @@ namespace personal_project
         private Button button1;
         private Label labelQuantity;
         string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\madgw\source\repos\Console\personal project\personal project\POS.mdf;Integrated Security=True;Connect Timeout=30";
+
+        
 
         public MenuPage1()
         {
@@ -309,7 +318,6 @@ namespace personal_project
             scrollViewer.Content = uniformGrid1;
         }
 
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             counter = 1;
@@ -334,6 +342,9 @@ namespace personal_project
                 }
             }
 
+            int parsedLabelText4 = int.Parse(labelText4);
+            orderItems.Add(new OrderItem { OrderPrice = parsedLabelText4,OrderQuantity = counter});
+            
             StackPanel mainStackPanel = new StackPanel
             {
                 Orientation = Orientation.Horizontal

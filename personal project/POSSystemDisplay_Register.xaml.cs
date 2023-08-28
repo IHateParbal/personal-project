@@ -30,7 +30,7 @@ namespace personal_project
         public POSSystemDisplay_Register()
         {
             InitializeComponent();
-            MainFocusWindow.Navigate(new Uri("MenuPage1.xaml", UriKind.Relative));
+            MainFocusWindow.Navigate(new Uri("Page2Tables.xaml", UriKind.Relative));
         }
 
         private void Menu_Click(object sender, RoutedEventArgs e)
@@ -41,7 +41,7 @@ namespace personal_project
 
         private void Reservation_Click(object sender, RoutedEventArgs e)
         {
-            MainFocusWindow.Navigate(new Uri("Signup.xaml", UriKind.Relative));
+            MainFocusWindow.Navigate(new Uri("Page2Tables.xaml", UriKind.Relative));
 
         }
 
@@ -53,13 +53,13 @@ namespace personal_project
 
         private void Delivery_Click(object sender, RoutedEventArgs e)
         {
-            MainFocusWindow.Navigate(new Uri("Signup.xaml", UriKind.Relative));
+            MainFocusWindow.Navigate(new Uri("Page2Tables.xaml", UriKind.Relative));
 
         }
 
         private void Accounting_Click(object sender, RoutedEventArgs e)
         {
-            MainFocusWindow.Navigate(new Uri("Signup.xaml", UriKind.Relative));
+            MainFocusWindow.Navigate(new Uri("Page2Tables.xaml", UriKind.Relative));
 
         }
     }
