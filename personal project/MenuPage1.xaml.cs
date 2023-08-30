@@ -29,6 +29,7 @@ namespace personal_project
     public partial class MenuPage1 : Page
     {
         List<OrderItem> orderItems = new List<OrderItem>();
+        private DataGrid dataGrid;
         private string labelText3 = null;
         private string labelText4 = null;
         private ScrollViewer scrollViewer;
@@ -343,98 +344,16 @@ namespace personal_project
             }
 
             int parsedLabelText4 = int.Parse(labelText4);
-            orderItems.Add(new OrderItem { OrderPrice = parsedLabelText4,OrderQuantity = counter});
-            
-            StackPanel mainStackPanel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal
+            selectedItemMiniTab.Children.Clear();
+            dataGrid = new DataGrid
+            {                
+                AutoGenerateColumns = true,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch,
+                ItemsSource = orderItems
             };
 
-            button1 = new Button
-            {
-                Height = 80,
-                Width = 245,
-                Margin = new Thickness(5),
-                HorizontalContentAlignment = HorizontalAlignment.Left
-            };
-
-            Grid grid = new Grid();
-
-            TextBlock label3 = new TextBlock
-            {
-                Text = labelText3,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-                FontFamily = new FontFamily("poppins"),
-                FontSize = 17,
-                FontWeight = FontWeights.Bold,
-                TextWrapping = TextWrapping.Wrap,
-                Height = 50,
-                Width = 225,
-                Margin = new Thickness(0, 0, 0, 15),
-            };
-
-            Label label4 = new Label
-            {
-                Content = labelText4,
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Bottom,
-                FontSize = 15,
-                FontWeight = FontWeights.SemiBold,
-                FontFamily = new FontFamily("poppins")
-            };
-            labelQuantity = new Label
-            {
-                Content = "x" + counter,
-                HorizontalAlignment = HorizontalAlignment.Right,
-                VerticalAlignment = VerticalAlignment.Bottom,
-                FontSize = 15,
-                FontWeight = FontWeights.SemiBold,
-                FontFamily = new FontFamily("poppins")
-            };
-            grid.Children.Add(label3);
-            grid.Children.Add(label4);
-            grid.Children.Add(labelQuantity);
-            mainStackPanel.Children.Add(button1);
-            button1.Content = grid;
-            button1.Click += Button_ClickDelete;
-
-            StackPanel nestedStackPanel = new StackPanel
-            {
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Center,
-            };
-
-            StackPanel nestedHorizontalStackPanel = new StackPanel
-            {
-                Orientation = Orientation.Horizontal
-            };
-
-            Button nestedButton2 = new Button
-            {
-                Width = 35,
-                Height = 30,
-                Content = "+",
-
-            };
-            nestedHorizontalStackPanel.Children.Add(nestedButton2);
-            nestedButton2.Click += Button_ClickIncrease;
-
-
-            Button nestedButton3 = new Button
-            {
-                Width = 35,
-                Height = 30,
-                Content = "-",
-            };
-            nestedHorizontalStackPanel.Children.Add(nestedButton3);
-            nestedButton3.Click += Button_ClickDecrease;
-
-            nestedStackPanel.Children.Add(nestedHorizontalStackPanel);
-
-            mainStackPanel.Children.Add(nestedStackPanel);
-
-            selectedItemMiniTab.Children.Add(mainStackPanel);
+            selectedItemMiniTab.Children.Add(dataGrid);
 
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -446,8 +365,7 @@ namespace personal_project
             sum += priceint;
             double finalPrice = sum + (0.13 * sum);
             BillReport.Text = "SubTotal Price:          " + sum + "\nVAT:                           " + Vat + "%\nTotal Price:                " + finalPrice;
-
-
+            orderItems.Add(new OrderItem { OrderPrice = parsedLabelText4, OrderQuantity = counter, Price = finalPrice});
         }
 
         private void Search_Click(object sender, RoutedEventArgs e)
@@ -538,8 +456,7 @@ namespace personal_project
             {
                 counter--;
                 labelQuantity.Content = "x" + counter;
-                UpdateMainButtonContent();
-                UpdateBill(counter, labelText3, labelText4);
+                UpdateBill(counter, labelText4);
 
             }
         }
@@ -548,32 +465,16 @@ namespace personal_project
         {
             counter++;
             labelQuantity.Content = "x" + counter;
-            UpdateMainButtonContent();
-            UpdateBill(counter, labelText3, labelText4);
+            UpdateBill(counter, labelText4);
         }
 
-        private void UpdateMainButtonContent()
-        {
-            Grid buttonGrid = button1.Content as Grid;
-            if (buttonGrid != null)
-            {
-                foreach (var uiElement in buttonGrid.Children)
-                {
-                    if (uiElement is Label label && label.Content == labelQuantity)
-                    {
-                        label.Content = labelQuantity.Content;
-                        break;
-                    }
-                }
-            }
-        }
-
-        private void UpdateBill(int counter, string labelText3, string labelText4)
+        private void UpdateBill(int counter, string labelText4)
         {
             int priceint = int.Parse(labelText4) * counter;
             int Vat = 13;
             double finalPrice = priceint + (0.13 * priceint);
             BillReport.Text = "SubTotal Price:          " + priceint + "\nVAT:                           " + Vat + "%\nTotal Price:                " + finalPrice;
+
         }
 
     }

@@ -65,7 +65,7 @@
             <StackPanel Grid.Column="1">
                 <ScrollViewer VerticalScrollBarVisibility="Hidden"  Height="350" VerticalAlignment="Top">
                     <StackPanel Name="selectedItemMiniTab" Margin="10" VerticalAlignment="Top">
-
+                        <DataGrid AutoGenerateColumns="True" ItemsSource="orderItems"/>
                     </StackPanel>
                 </ScrollViewer>
                 <TextBlock x:Name="BillReport" Height="200" Foreground="WhiteSmoke" FontSize="25"/>

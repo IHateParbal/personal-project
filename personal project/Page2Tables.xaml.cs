@@ -20,9 +20,11 @@ namespace personal_project
     /// </summary>
     public partial class Page2Tables : Page
     {
+
         public Page2Tables()
         {
             InitializeComponent();
+            
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e)
